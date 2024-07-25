@@ -5,8 +5,8 @@ import (
 	"task-manager-service/controllers"
 )
 
-func Routes() *gin.Engine {
-	router := gin.Default()
+func SetupRoutes(router *gin.Engine) {
+	//router := gin.New()
 
 	v1 := router.Group("/api/v1")
 	{
@@ -14,23 +14,17 @@ func Routes() *gin.Engine {
 		v1.POST("/tasks", controllers.CreateTask)
 
 		// get all tasks
-		v1.GET("/tasks", nil)
+		v1.GET("/tasks", controllers.GetAllTasks)
 
 		// get target task
-		v1.GET("/tasks/:id", func(context *gin.Context) {
-			_ = context.Param("id")
-		})
+		v1.GET("/tasks/:id", controllers.GetTargetTask)
 
 		// update task
-		v1.PUT("/tasks/:id", func(context *gin.Context) {
-			_ = context.Param("id")
-		})
+		v1.PUT("/tasks/:id", controllers.UpdateTask)
 
 		// delete task
-		v1.DELETE("/tasks/:id", func(context *gin.Context) {
-			_ = context.Param("id")
-		})
+		v1.DELETE("/tasks/:id", controllers.DeleteTask)
 	}
 
-	return router
+	//return router
 }
